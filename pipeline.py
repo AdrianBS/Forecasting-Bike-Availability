@@ -29,7 +29,7 @@ def load_data(raw: Path):
     stations = pd.read_csv(raw / "stations.csv")
     stations["timestamp"] = pd.to_datetime(stations["timestamp"], utc=True)
 
-    trips = pd.read_csv(raw / "trips.csv")
+    trips = pd.read_csv(raw / "trips.zip")
     trips["started_at"] = parse_ts(trips["started_at"])
     trips["ended_at"]   = parse_ts(trips["ended_at"])
 

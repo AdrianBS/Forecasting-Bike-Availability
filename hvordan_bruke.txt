@@ -1,6 +1,8 @@
 Brukerveiledning
 
-Rådata (csv-filer) skal ligge i en undermappe "raw_data".
+Rådata (csv-filer) skal ligge i en undermappe "raw_data". Merk: trips.csv er 
+komprimert til trips.zip for å holde seg under GitHub sin filstørrelsesgrense. 
+pandas.read_csv() leser trips.zip direkte, så ingen utpakking er nødvendig.
 Vi har også mappen "data" med en sub-mappe "processed" som holder på 
 model_ready.csv (og en test-versjon)
 

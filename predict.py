@@ -25,7 +25,7 @@ def load_raw_data():
     stations = pd.read_csv(RAW / "stations.csv")
     stations["timestamp"] = pd.to_datetime(stations["timestamp"], utc=True)
     
-    trips = pd.read_csv(RAW / "trips.csv")
+    trips = pd.read_csv(RAW / "trips.zip")
     trips["started_at"] = parse_ts(trips["started_at"])
     trips["ended_at"] = parse_ts(trips["ended_at"])
     
