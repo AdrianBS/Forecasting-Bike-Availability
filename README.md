@@ -127,6 +127,3 @@ Python · pandas · scikit-learn · Plotly
 
 ---
 *Course project, INF161 - University of Bergen, Autumn 2025.*
-
----
-*Course project, INF161 - University of Bergen, Autumn 2025.*
