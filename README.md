@@ -62,7 +62,7 @@ flowchart LR
 ## Repo structure
 
 ```
-├── raw_data/                 # stations.csv, trips.csv, weather.csv + README.md (field docs)
+├── raw_data/                 # stations.csv, trips.zip (compressed), weather.csv + README.md (field docs)
 ├── data/processed/           # model_ready.csv (prebuilt output of pipeline.py)
 ├── EDA.ipynb                 # exploratory data analysis (interactive Plotly charts)
 ├── pipeline.py                # raw data → model_ready.csv (already run; rerun to refresh)
