@@ -1,4 +1,4 @@
-# Bergen Bysykkel — Forecasting Bike Availability
+# Forecasting Bike Availability - Bergen Bysykkel
 
 Predicts how many bikes will be available at 9 key Bergen bike-share stations **one hour from now**, using historical station status, trip logs, and weather data.
 
@@ -18,7 +18,7 @@ _Note: This project is written in **Norwegian**._
 | RandomForest | 1.121 | – |
 | **SVR (selected)** | **1.061** | **1.461** |
 
-The best model (SVR) beats a last-observation-carried-forward baseline by ~3% RMSE on a chronological hold-out test set — modest but consistent, since bike counts change slowly hour to hour and the baseline is already strong outside rush hours.
+The best model (SVR) beats a last-observation-carried-forward baseline by ~3% RMSE on a chronological hold-out test set. Modest but consistent, since bike counts change slowly hour to hour and the baseline is already strong outside rush hours.
 
 ## A few things the data showed
 
@@ -26,7 +26,7 @@ The best model (SVR) beats a last-observation-carried-forward baseline by ~3% RM
 <tr>
 <td width="33%">
 <img src="images/observed_vs_locf.png" width="100%"><br>
-<sub><b>LOCF tracks well but lags</b> — it over/under-predicts exactly when availability is changing fastest, which is why time and traffic features matter.</sub>
+<sub><b>LOCF tracks well but lags</b> - it over/under-predicts exactly when availability is changing fastest, which is why time and traffic features matter.</sub>
 </td>
 <td width="33%">
 <img src="images/departures_heatmap.png" width="100%"><br>
@@ -34,7 +34,7 @@ The best model (SVR) beats a last-observation-carried-forward baseline by ~3% RM
 </td>
 <td width="33%">
 <img src="images/free_bikes_per_station.png" width="100%"><br>
-<sub><b>Each station has its own rhythm</b> — some drain in the morning, others in the afternoon, so per-station patterns matter more than a global average.</sub>
+<sub><b>Each station has its own rhythm</b> - some drain in the morning, others in the afternoon, so per-station patterns matter more than a global average.</sub>
 </td>
 </tr>
 </table>
@@ -51,9 +51,9 @@ flowchart LR
     F --> G[Prediction for t+1h<br>per station, in Europe/Oslo time]
 ```
 
-1. **`pipeline.py`** — builds an hourly grid per station, forward-fills bike counts (LOCF), joins weather (resampled hourly) and trip-derived features (departures/arrivals, 3h rolling windows, net flow), adds calendar features, and writes `model_ready.csv`. The April–August 2024 window is dropped due to very sparse station coverage.
-2. **`train.py`** — chronological 70/15/15 train/val/test split (no shuffling, to avoid leakage), compares ElasticNet, RandomForest, HistGradientBoosting and SVR against the LOCF baseline, and saves the best model + feature schema + training medians with `pickle`.
-3. **`predict.py`** — reads the latest raw data, finds the most recent timestamp, rounds up to the next full hour, rebuilds the exact same features used in training, and outputs an integer prediction (≥0) for each station one hour ahead, printed in local Bergen time.
+1. **`pipeline.py`** - builds an hourly grid per station, forward-fills bike counts (LOCF), joins weather (resampled hourly) and trip-derived features (departures/arrivals, 3h rolling windows, net flow), adds calendar features, and writes `model_ready.csv`. The April–August 2024 window is dropped due to very sparse station coverage.
+2. **`train.py`** - chronological 70/15/15 train/val/test split (no shuffling, to avoid leakage), compares ElasticNet, RandomForest, HistGradientBoosting and SVR against the LOCF baseline, and saves the best model + feature schema + training medians with `pickle`.
+3. **`predict.py`** - reads the latest raw data, finds the most recent timestamp, rounds up to the next full hour, rebuilds the exact same features used in training, and outputs an integer prediction (≥0) for each station one hour ahead, printed in local Bergen time.
 
 ## Repo structure
 
@@ -86,16 +86,16 @@ No API keys or extra setup needed. See [`hvordan_bruke.txt`](hvordan_bruke.txt) 
 
 ## Data
 
-Raw data lives in [`raw_data/`](raw_data) — see [`raw_data/README.md`](raw_data/README.md) for full field-level documentation (columns, types, sampling frequency, known quirks like station-name mismatches between files).
+Raw data lives in [`raw_data/`](raw_data) - see [`raw_data/README.md`](raw_data/README.md) for full field-level documentation (columns, types, sampling frequency, known quirks like station-name mismatches between files).
 
 Sources:
-- [Bergen Bysykkel open data](https://bergenbysykkel.no/en/open-data) — station status & trips
-- [Open-Meteo](https://open-meteo.com/) — weather
-- [MaxHalford/bike-sharing-history](https://github.com/MaxHalford/bike-sharing-history) — historical station snapshots
+- [Bergen Bysykkel open data](https://bergenbysykkel.no/en/open-data) - station status & trips
+- [Open-Meteo](https://open-meteo.com/) - weather
+- [MaxHalford/bike-sharing-history](https://github.com/MaxHalford/bike-sharing-history) - historical station snapshots
 
 ## Stack
 
 Python · pandas · scikit-learn · Plotly
 
 ---
-*Course project, INF161 — University of Bergen, Autumn 2025.*
+*Course project, INF161 - University of Bergen, Autumn 2025.*
