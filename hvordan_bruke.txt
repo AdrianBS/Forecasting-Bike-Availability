@@ -1,0 +1,20 @@
+Brukerveiledning
+
+Rådata (csv-filer) skal ligge i en undermappe "raw_data".
+Vi har også mappen "data" med en sub-mappe "processed" som holder på 
+model_ready.csv (og en test-versjon)
+
+Jeg tror ikke det skal være nødvendig å lage mappene, men det kan være lurt 
+å gjøre det for sikkerhetsskyld eller hvis noe går galt.
+
+Når du er i terminalen i rotmappen av prosjektet:
+    Kjør fra terminalen i rekkefølge:
+        python train.py
+        python predict.py
+
+Debugging:
+
+Jeg hadde ikke noe problem med å kjøre programmet på denne måten, men om du støter 
+på et problem med predict.py kan det være fordi modellen som blir lagret i train.py
+blir lagret i en undermappe "models". Da vil jeg tro at du kan ta modellen ut av undermappen
+og prøve å kjøre predict.py igjen. 
