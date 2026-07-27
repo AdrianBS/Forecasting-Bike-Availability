@@ -78,8 +78,8 @@ flowchart LR
 Raw data is included in [`raw_data/`](raw_data), and `data/processed/model_ready.csv` (the output of `pipeline.py`) is already built and committed, so you can go straight to training and predicting:
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
-cd YOUR-REPO
+git clone https://github.com/AdrianBS/Forecasting-Bike-Availability.git
+cd Forecasting-Bike-Availability
 pip install -r requirements.txt
 
 python train.py    # trains models on model_ready.csv, saves the best one to models/
