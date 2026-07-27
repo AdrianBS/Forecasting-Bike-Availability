@@ -41,6 +41,8 @@ The best model (SVR) beats a last-observation-carried-forward baseline by ~3% RM
 
 ## How it works
 
+*(data flow - `pipeline.py`'s output is already committed, so day-to-day you only run `train.py` → `predict.py`; see [Running it yourself](#running-it-yourself))*
+
 ```mermaid
 flowchart LR
     A[stations.csv<br>trips.csv<br>weather.csv] --> B[pipeline.py<br>hourly grid · LOCF · lags ·<br>rolling windows · weather]
@@ -58,31 +60,37 @@ flowchart LR
 ## Repo structure
 
 ```
-├── raw_data/                # stations.csv, trips.csv, weather.csv + README.md (field docs)
-├── docs/EDA_rendered.html   # rendered interactive explanatory data analysis
-├── EDA.ipynb                # exploratory data analysis (interactive Plotly charts)
-├── pipeline.py               # raw data → model_ready.csv
-├── train.py                   # trains + selects + saves the model
-├── predict.py                 # loads latest raw data → next-hour prediction
-├── Rapport_Prosjekt.pdf      # full written report (Norwegian)
-└── hvordan_bruke.txt          # usage notes (Norwegian)
+├── raw_data/                 # stations.csv, trips.csv, weather.csv + README.md (field docs)
+├── data/processed/           # model_ready.csv (prebuilt output of pipeline.py)
+├── EDA.ipynb                 # exploratory data analysis (interactive Plotly charts)
+├── pipeline.py                # raw data → model_ready.csv (already run; rerun to refresh)
+├── train.py                    # trains + selects + saves the model
+├── predict.py                  # loads latest raw data → next-hour prediction
+├── requirements.txt           # pinned dependencies
+├── Rapport_Prosjekt.pdf       # full written report (Norwegian)
+└── hvordan_bruke.txt           # usage notes (Norwegian)
 ```
 
 ## Running it yourself
 
-Raw data is included in [`raw_data/`](raw_data), so the full pipeline runs end to end straight from a clone:
+Raw data is included in [`raw_data/`](raw_data), and `data/processed/model_ready.csv` (the output of `pipeline.py`) is already built and committed, so you can go straight to training and predicting:
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
 cd YOUR-REPO
-pip install pandas numpy scikit-learn
+pip install -r requirements.txt
 
-python pipeline.py    # builds data/processed/model_ready.csv
-python train.py        # trains models, saves the best one to models/
-python predict.py      # prints a prediction for the next hour
+python train.py    # trains models on model_ready.csv, saves the best one to models/
+python predict.py  # loads the saved model + latest raw data, prints a next-hour prediction
 ```
 
-No API keys or extra setup needed. See [`hvordan_bruke.txt`](hvordan_bruke.txt) for troubleshooting notes.
+No API keys or extra setup needed - see [`hvordan_bruke.txt`](hvordan_bruke.txt) for troubleshooting notes (e.g. `predict.py` expects the `.pkl` from `train.py` directly under `models/`).
+
+`pipeline.py` is the script that turned raw data into `model_ready.csv` in the first place. You only need to rerun it - before `train.py` - if you've updated `raw_data/` and want to regenerate the processed dataset:
+
+```bash
+python pipeline.py  # rebuilds data/processed/model_ready.csv from raw_data/
+```
 
 ## Data
 
