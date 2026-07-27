@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# OS
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+
+# Env / secrets
+.env
