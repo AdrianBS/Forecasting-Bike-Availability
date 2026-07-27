@@ -18,7 +18,9 @@ _Note: This project is written in **Norwegian**._
 | RandomForest | 1.121 | – |
 | **SVR (selected)** | **1.061** | **1.461** |
 
-The best model (SVR) beats a last-observation-carried-forward baseline by ~3% RMSE on a chronological hold-out test set. Modest but consistent, since bike counts change slowly hour to hour and the baseline is already strong outside rush hours.
+The best model (SVR) beats a last-observation-carried-forward baseline by ~3% RMSE on a chronological hold-out test set. This is modest but consistent, since bike counts change slowly hour to hour and the baseline is already strong outside rush hours.
+
+Trained on **52,622 rows** spanning **2024-04-10 to 2025-05-02** (5,847 hourly time steps × 9 stations), split chronologically 70/15/15 (36,834 / 7,894 / 7,894) to avoid leaking future information into training.
 
 ## A few things the data showed
 
@@ -67,7 +69,7 @@ flowchart LR
 ├── train.py                    # trains + selects + saves the model
 ├── predict.py                  # loads latest raw data → next-hour prediction
 ├── requirements.txt           # pinned dependencies
-├── Rapport_Prosjekt.pdf       # full written report (Norwegian)
+├── Project_Report.pdf       # full written report (Norwegian)
 └── hvordan_bruke.txt           # usage notes (Norwegian)
 ```
 
@@ -92,6 +94,19 @@ No API keys or extra setup needed - see [`hvordan_bruke.txt`](hvordan_bruke.txt)
 python pipeline.py  # rebuilds data/processed/model_ready.csv from raw_data/
 ```
 
+**Example `predict.py` output:**
+
+```
+Siste tidsstempel i data: 2025-05-02 17:49:25+0200
+Neste hele klokketime: 2025-05-02 18:00:00+0200
+Predikerer for: 2025-05-02 19:00:00+0200
+
+                Stasjon  Nåværende sykler  Predikerte sykler
+       Florida Bybanestopp                21                 18
+          Møllendalsplass                 4                  7
+                     ...                ...                ...
+```
+
 ## Data
 
 Raw data lives in [`raw_data/`](raw_data) - see [`raw_data/README.md`](raw_data/README.md) for full field-level documentation (columns, types, sampling frequency, known quirks like station-name mismatches between files).
@@ -101,9 +116,17 @@ Sources:
 - [Open-Meteo](https://open-meteo.com/) - weather
 - [MaxHalford/bike-sharing-history](https://github.com/MaxHalford/bike-sharing-history) - historical station snapshots
 
+## What I'd improve
+
+- **Label naming** - `y_t_plus_1h` is precise but clunky; something shorter would read better throughout the code.
+- **Model coverage** - only 4 model types were compared (ElasticNet, RandomForest, HistGradientBoosting, SVR). A gradient-boosted model with more thorough hyperparameter tuning is the most likely next step to push RMSE lower.
+
 ## Stack
 
 Python · pandas · scikit-learn · Plotly
+
+---
+*Course project, INF161 - University of Bergen, Autumn 2025.*
 
 ---
 *Course project, INF161 - University of Bergen, Autumn 2025.*
