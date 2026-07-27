@@ -2,7 +2,7 @@
 
 Predicts how many bikes will be available at 9 key Bergen bike-share stations **one hour from now**, using historical station status, trip logs, and weather data.
 
-**[▶ View the full interactive EDA notebook](https://AdrianBS.github.io/Forecasting-Bike-Availability/docs/EDA_rendered.html)** · **[📄 Read the full report (PDF)](Rapport_Prosjekt.pdf)**
+**[▶ View the full interactive EDA notebook](https://adrianbs.github.io/Forecasting-Bike-Availability/EDA_rendered.html)** · **[📄 Read the full report (PDF)](https://github.com/AdrianBS/Forecasting-Bike-Availability/raw/main/Rapport_Prosjekt.pdf)**
 
 ---
 
@@ -16,7 +16,7 @@ Predicts how many bikes will be available at 9 key Bergen bike-share stations **
 | RandomForest | 1.121 | – |
 | **SVR (selected)** | **1.061** | **1.461** |
 
-The best model (SVR) beats a last-observation-carried-forward baseline by ~3% RMSE on a chronological hold-out test set — modest but consistent, since bike counts change slowly hour to hour and the baseline is already strong outside rush hours.
+The best model (SVR) beats a last-observation-carried-forward baseline by ~3% RMSE on a chronological hold-out test set — modest but consistent, since bike counts change slowly hour to hour and the [...]
 
 ## A few things the data showed
 
@@ -49,9 +49,9 @@ flowchart LR
     F --> G[Prediction for t+1h<br>per station, in Europe/Oslo time]
 ```
 
-1. **`pipeline.py`** — builds an hourly grid per station, forward-fills bike counts (LOCF), joins weather (resampled hourly) and trip-derived features (departures/arrivals, 3h rolling windows, net flow), adds calendar features, and writes `model_ready.csv`. The April–August 2024 window is dropped due to very sparse station coverage.
-2. **`train.py`** — chronological 70/15/15 train/val/test split (no shuffling, to avoid leakage), compares ElasticNet, RandomForest, HistGradientBoosting and SVR against the LOCF baseline, and saves the best model + feature schema + training medians with `pickle`.
-3. **`predict.py`** — reads the latest raw data, finds the most recent timestamp, rounds up to the next full hour, rebuilds the exact same features used in training, and outputs an integer prediction (≥0) for each station one hour ahead, printed in local Bergen time.
+1. **`pipeline.py`** — builds an hourly grid per station, forward-fills bike counts (LOCF), joins weather (resampled hourly) and trip-derived features (departures/arrivals, 3h rolling windows, n[...]
+2. **`train.py`** — chronological 70/15/15 train/val/test split (no shuffling, to avoid leakage), compares ElasticNet, RandomForest, HistGradientBoosting and SVR against the LOCF baseline, and s[...]
+3. **`predict.py`** — reads the latest raw data, finds the most recent timestamp, rounds up to the next full hour, rebuilds the exact same features used in training, and outputs an integer predi[...]
 
 ## Repo structure
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ## Running it yourself
 
-Raw data (`stations.csv`, `trips.csv`, `weather.csv`) isn't included in this repo, so the scripts aren't runnable out of the box — see the [notebook](https://YOUR-USERNAME.github.io/YOUR-REPO/EDA_rendered.html) and [report](Rapport_Prosjekt.pdf) for the full analysis and results. With the raw CSVs in a `raw_data/` folder:
+Raw data (`stations.csv`, `trips.csv`, `weather.csv`) isn't included in this repo, so the scripts aren't runnable out of the box — see the [notebook](https://YOUR-USERNAME.github.io/YOUR-REPO/ED[...]
 
 ```bash
 python pipeline.py    # builds data/processed/model_ready.csv
